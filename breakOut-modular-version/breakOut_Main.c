@@ -3,12 +3,14 @@
 #include "lcdutils.h"
 #include "lcddraw.h"
 #include "ball.h"
+#include "switches.h"
 
 // WARNING: LCD DISPLAY USES P1.0.  Do not touch!!!
 #define LED BIT6 /* note that bit zero req'd for display */
 
 
 short redrawScreen = 1;
+
 void wdt_c_handler()
 {
   static int secCount = 0;
@@ -18,16 +20,18 @@ void wdt_c_handler()
   if (secCount >= 25) {/* 10/sec */
 
     /* move ball */
-
     secCount = 0;
-
     ball_collisions(); // check boundries //
 
     // ball_paddle_collision();
-
     redrawScreen = 1;
-
   }
+
+  // Testing switches
+  if (switches & SW4)
+    update_ball(COLOR_BLUE);
+  if (switches & SW1)
+    update_ball(COLOR_GREEN);
 }
   
 void main()
@@ -41,13 +45,14 @@ void main()
 
   lcd_init();
 
+  switch_init();              // setp up switches //
+
   enableWDTInterrupts();      /**< enable periodic interrupt */
 
-  or_sr(0x8);              /**< GIE (enable interrupts) */
+  or_sr(0x8);                 /**< GIE (enable interrupts) */
+
 
   clearScreen(COLOR_BLACK);  // background is black //
-
-  draw_ball(screenHeight/2, screenWidth/2, COLOR_RED);
 
 
   while(1) { // Testing ball modular//
@@ -59,7 +64,5 @@ void main()
     or_sr(0x10);        /**< CPU OFF */
     P1OUT |= LED;       /* led on */
     
-    
-      
   }
 }
