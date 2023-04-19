@@ -57,7 +57,7 @@ void main()
 
   clearScreen(COLOR_BLACK);  // background is black //
 
-  while(block_count != 30) { // Testing ball modular//
+  while(block_count <= 30 &&  ball_health > 0) { // Testing ball modular//
     if (redrawScreen) {
       redrawScreen = 0;
       update_paddle();
