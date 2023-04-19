@@ -7,6 +7,7 @@ int next_position[2] = {(screenHeight/2)+1, (screenWidth/2)+1};
 
 int ball_velocity[2] = {1,1}; // x = columns, y = row direction
 
+// row and col bounds//
 int colLimits[2] = {1,screenWidth};
 
 int rowLimits[2] = {1,screenHeight};
