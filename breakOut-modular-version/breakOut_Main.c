@@ -27,7 +27,7 @@ void wdt_c_handler()
     redrawScreen = 1;
   }
 
-  // Testing switches
+  // Testing switches//
   if (switches & SW4)
     update_ball(COLOR_BLUE);
   if (switches & SW1)
