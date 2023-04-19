@@ -1,0 +1,11 @@
+#include "lcdutils.h"
+#include "lcddraw.h"
+
+
+void draw_ball(int row, int col, int color)
+
+{
+
+  fillRectangle(col-1, row-1, 5, 5, color);
+
+}

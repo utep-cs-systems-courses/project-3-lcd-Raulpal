@@ -1,0 +1,8 @@
+#ifndef ball_included
+#define ball_included
+
+
+void draw_ball(int row, int col, int color);
+
+
+#endif // included
