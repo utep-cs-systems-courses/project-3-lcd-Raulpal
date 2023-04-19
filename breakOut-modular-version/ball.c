@@ -5,7 +5,7 @@ int ball_position[2] = {screenHeight/2, screenWidth/2};
 
 int next_position[2] = {(screenHeight/2)+1, (screenWidth/2)+1}; 
 
-int ball_velocity[2] = {1,1}; // x = columns, y = row direction
+int ball_velocity[2] = {3,3}; // x = columns, y = row direction
 
 // row and col bounds//
 int colLimits[2] = {1,screenWidth};
@@ -37,4 +37,25 @@ void update_ball(int color)
     ball_position[position] = next_position[position];
 
   draw_ball(ball_position[0], ball_position[1], color); // Draw ball at new row and column//
+}
+// left/right/upper/lower/paddles/block collisions //
+void ball_collisions()
+{
+  int oldCol = next_position[1];
+  int newCol = oldCol + ball_velocity[0];
+
+  int oldRow = next_position[0];
+  int newRow = oldRow  + ball_velocity[1];
+
+  if (newCol < colLimits[0] || newCol >= colLimits[1])  //left/right
+    ball_velocity[0] = -ball_velocity[0];
+
+  if (newRow < rowLimits[0] || newRow >= rowLimits[1]) // top/bottom
+    ball_velocity[1] = -ball_velocity[1];
+
+  newCol = oldCol + ball_velocity[0];  // compute new col
+  newRow = oldRow  + ball_velocity[1]; // compute new row
+
+  next_position[1] = newCol;
+  next_position[0] = newRow;
 }
