@@ -1,0 +1,6 @@
+#ifndef blocks_included
+#define blocks_included
+
+void draw_blocks(int row, int col, int color);
+void update_blocks();
+#endif // included

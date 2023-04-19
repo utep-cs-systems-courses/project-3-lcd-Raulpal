@@ -3,6 +3,8 @@
 #include "lcdutils.h"
 #include "lcddraw.h"
 #include "ball.h"
+#include "paddle.h"
+#include "blocks.h"
 #include "switches.h"
 
 // WARNING: LCD DISPLAY USES P1.0.  Do not touch!!!
@@ -29,9 +31,11 @@ void wdt_c_handler()
 
   // Testing switches//
   if (switches & SW4)
-    update_ball(COLOR_BLUE);
+    paddle_right_boundry();
+    //update_ball(COLOR_BLUE);
   if (switches & SW1)
-    update_ball(COLOR_GREEN);
+    paddle_left_boundry();
+    //update_ball(COLOR_GREEN);
 }
   
 void main()
@@ -51,13 +55,13 @@ void main()
 
   or_sr(0x8);                 /**< GIE (enable interrupts) */
 
-
   clearScreen(COLOR_BLACK);  // background is black //
 
-
-  while(1) { // Testing ball modular//
+  while(block_count != 30) { // Testing ball modular//
     if (redrawScreen) {
       redrawScreen = 0;
+      update_paddle();
+      update_blocks();
       update_ball(COLOR_RED);
     }
     P1OUT &= ~LED;      /* led off */

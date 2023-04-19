@@ -91,6 +91,7 @@ void wdt_c_handler()
 	colVelocity = -colVelocity;
       else
 	controlPos[0] = newCol;
+
     }
 
     {				/* update hourglass */

@@ -16,5 +16,6 @@ extern int colLimits[2], rowLimits[2];
   
 void draw_ball(int row, int col, int color);
 void update_ball(int color);
+void ball_collisions();
 
 #endif // included

@@ -1,5 +1,8 @@
 #include "lcdutils.h"
 #include "lcddraw.h"
+#include "ball.h"
+#include "paddle.h"
+#include "blocks.h"
 
 int ball_position[2] = {screenHeight/2, screenWidth/2}; 
 
@@ -52,9 +55,18 @@ void ball_collisions()
 
   if (newRow < rowLimits[0] || newRow >= rowLimits[1]) // top/bottom
     ball_velocity[1] = -ball_velocity[1];
+  if (ball_paddle_collision())                        // ball hit paddlle
+    ball_velocity[1] = -ball_velocity[1];
 
-  newCol = oldCol + ball_velocity[0];  // compute new col
-  newRow = oldRow  + ball_velocity[1]; // compute new row
+  if (ball_block_collision()) {                       //  ball hit block
+    if(block_ball[0] == 1)                            //  ball hit rowt
+      ball_velocity[1] = -ball_velocity[1];
+
+    else if (block_ball[1] == 1)                      // ball hit colum 
+      ball_velocity[0] = -ball_velocity[0];
+  }
+  newCol = oldCol + ball_velocity[0];                 // compute new col
+  newRow = oldRow  + ball_velocity[1];                // compute new row
 
   next_position[1] = newCol;
   next_position[0] = newRow;
