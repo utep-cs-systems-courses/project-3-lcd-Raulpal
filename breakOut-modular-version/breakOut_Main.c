@@ -27,7 +27,7 @@ void main()
   draw_ball(screenHeight/2, screenWidth/2, COLOR_RED);
 
   int i = 0;
-  while(1) {
+  while(1) { // Testing ball modular//
     update_ball(COLOR_RED);
     if (i >= 800) {
       int oldCol = next_position[1];
