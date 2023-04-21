@@ -3,6 +3,7 @@
 #include "ball.h"
 #include "paddle.h"
 #include "blocks.h"
+#include "hearts.h"
 
 int ball_position[2] = {screenHeight/2, screenWidth/2}; 
 
@@ -10,10 +11,13 @@ int next_position[2] = {(screenHeight/2)+1, (screenWidth/2)+1};
 
 int ball_velocity[2] = {3,3}; // x = columns, y = row direction
 
+int ball_health = 3;
+
+int ball_color = COLOR_RED;
 // row and col bounds//
 int colLimits[2] = {1,screenWidth};
 
-int rowLimits[2] = {1,screenHeight};
+int rowLimits[2] = {1,screenHeight-19};
 
 
 // draw size of ball 5x5 //
@@ -50,16 +54,21 @@ void ball_collisions()
   int oldRow = next_position[0];
   int newRow = oldRow  + ball_velocity[1];
 
-  if (newCol < colLimits[0] || newCol >= colLimits[1])  //left/right
+  if (newCol < colLimits[0] || newCol >= colLimits[1])  //left/right //
     ball_velocity[0] = -ball_velocity[0];
 
-  if (newRow < rowLimits[0] || newRow >= rowLimits[1]) // top/bottom
+  if (newRow < rowLimits[0] || newRow >= rowLimits[1]) // top bottom screen //
     ball_velocity[1] = -ball_velocity[1];
-  if (ball_paddle_collision())                        // ball hit paddlle
+  if (newRow >= rowLimits[1]) {                         // bottom screen hit // 
+    ball_health--;
+    update_heart();
+  }
+  
+  if (ball_paddle_collision() == 1)                        // ball hit paddlle //
     ball_velocity[1] = -ball_velocity[1];
-
-  if (ball_block_collision()) {                       //  ball hit block
-    if(block_ball[0] == 1)                            //  ball hit rowt
+  
+  if (ball_block_collision()) {                       //  ball hit block //
+    if(block_ball[0] == 1)                            //  ball hit row // 
       ball_velocity[1] = -ball_velocity[1];
 
     else if (block_ball[1] == 1)                      // ball hit colum 
@@ -71,3 +80,4 @@ void ball_collisions()
   next_position[1] = newCol;
   next_position[0] = newRow;
 }
+
