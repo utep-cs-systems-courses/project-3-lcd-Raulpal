@@ -6,6 +6,7 @@
 #include "paddle.h"
 #include "blocks.h"
 #include "switches.h"
+#include "hearts.h"
 
 // WARNING: LCD DISPLAY USES P1.0.  Do not touch!!!
 #define LED BIT6 /* note that bit zero req'd for display */
@@ -19,8 +20,7 @@ void wdt_c_handler()
 
   secCount ++;
 
-  if (secCount >= 25) {/* 10/sec */
-
+  if (secCount >= 25) {   /* 10/sec */
     /* move ball */
     secCount = 0;
     ball_collisions(); // check boundries //
@@ -29,13 +29,14 @@ void wdt_c_handler()
     redrawScreen = 1;
   }
 
-  // Testing switches//
-  if (switches & SW4)
+  // button 4 = right movement and button 1 = left movement //
+  if (switches & SW4) 
     paddle_right_boundry();
-    //update_ball(COLOR_BLUE);
-  if (switches & SW1)
+      
+  if (switches & SW1) 
     paddle_left_boundry();
-    //update_ball(COLOR_GREEN);
+  
+   
 }
   
 void main()
@@ -57,16 +58,24 @@ void main()
 
   clearScreen(COLOR_BLACK);  // background is black //
 
+  fillRectangle(0,screenHeight-18, screenWidth, 3, COLOR_WHITE);
+
+  update_heart();            // initial heart lives //
+
+  drawString5x7(20,20,"break-out", COLOR_WHITE,COLOR_BLACK);
+
+  /*
   while(block_count <= 30 &&  ball_health > 0) { // Testing ball modular//
     if (redrawScreen) {
       redrawScreen = 0;
-      update_paddle();
+      update_paddle(); 
       update_blocks();
-      update_ball(COLOR_RED);
+      update_ball(ball_color);
     }
-    P1OUT &= ~LED;      /* led off */
-    or_sr(0x10);        /**< CPU OFF */
-    P1OUT |= LED;       /* led on */
+    P1OUT &= ~LED;      // led off //
+    or_sr(0x10);        // CPU OFF //
+    P1OUT |= LED;       // led on //
     
   }
+  */
 }
