@@ -54,15 +54,9 @@ void drawString8x12(u_char col, u_char row, char *string,
 
 void update_score()
 {
-  char str[10];
+  char str[6];
   sprintf(str,"%d",block_count);
-  int index = 0;
-  while(*(str + index))
-    index++;
-  str[index] = '/';
-  str[index+1] = '3';
-  str[index+2] = '0';    
-
-  fillRectangle((screenWidth/2) + 19, screenHeight-12, 50, 17, COLOR_BLACK);
+    
+  fillRectangle((screenWidth/2) + 19, screenHeight-12, 20, 17, COLOR_BLACK);
   drawString8x12((screenWidth/2) + 20, screenHeight-12, str, COLOR_WHITE, COLOR_BLACK);  
 }
