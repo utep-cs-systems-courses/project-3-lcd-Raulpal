@@ -2,8 +2,7 @@
 #include "lcddraw.h"
 #include "blocks.h"
 #include "ball.h"
-
-
+#include "scoreBoard.h"
 
 
 int blockLife[5][6] =  {{1,1,1,1,1,1},
@@ -18,6 +17,7 @@ int blockColor[5][6]=
    {COLOR_PINK,COLOR_BEIGE,COLOR_FIREBRICK,COLOR_SIENNA,COLOR_GOLDENROD,COLOR_VIOLET},
    {COLOR_RED,COLOR_GREEN,COLOR_GOLD,COLOR_PINK,COLOR_PURPLE,COLOR_BROWN}};
 int block_count = 0;
+int past_ball_count = 0;
 
 int block_ball[2] = {0,0}; // row and col //
 
@@ -56,9 +56,10 @@ char ball_block_collision()
       if(blockLife[row][col] == 1 && ball_position[0] >= i &&  ball_position[0] <= i + 15  &&  ball_position[1] >= j  && ball_position[1] <= j + 20) { // ball hit row
 
 	blockLife[row][col] = 0;
-
-	block_count++;
-
+	block_count++;  
+        //update_score(); // display blocks distroyed //
+	ball_color = blockColor[row][col];  // change ball color to block color // 
+	
 	if (ball_position[0] >= i &&  ball_position[0] <= i + 15)
 	  block_ball[0] = 1; // row hit
 
