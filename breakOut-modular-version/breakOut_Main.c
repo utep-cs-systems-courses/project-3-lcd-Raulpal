@@ -40,7 +40,8 @@ void wdt_c_handler()
   
    
 }
-  
+
+void update_screen();
 void main()
 {
 
@@ -63,26 +64,14 @@ void main()
   fillRectangle(0,screenHeight-18, screenWidth, 3, COLOR_WHITE);
 
   update_heart();            // initial heart lives //
-
-  /*
-  int num = 123;
-
-  char str[10];
-
-  char str2 = 't';
-  sprintf(str, "%d", num );
-  str[3] = str2;
-  */
-  drawString8x12((screenWidth/2) + 20,screenHeight-12,"0/30", COLOR_WHITE, COLOR_BLACK);
- 
   
+  drawString8x12((screenWidth/2) + 39,screenHeight-12,"/30", COLOR_WHITE, COLOR_BLACK);
+
+
   while(block_count < 30 &&  ball_health > 0) { // until play finshied game or loses last life//
     if (redrawScreen) {
       redrawScreen = 0;
-      update_paddle(); 
-      update_blocks();
-      //update_score();
-      update_ball(ball_color);
+      update_screen();
     }
     P1OUT &= ~LED;      // led off //
     or_sr(0x10);        // CPU OFF //
@@ -93,4 +82,16 @@ void main()
    or_sr(0x10);        // CPU OFF //
  
  
+}
+
+void update_screen()
+{
+   update_paddle(); 
+   update_blocks();
+
+   if (block_count > past_ball_count) {
+     past_ball_count = block_count;
+     update_score();
+   }
+   update_ball(ball_color);
 }
