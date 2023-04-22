@@ -10,7 +10,7 @@ AS              = msp430-elf-gcc -mmcu=${CPU} -c
 all:breakOut.elf
 
 #additional rules for files
-breakOut.elf: ${COMMON_OBJECTS} breakOut_Main.o ball.o  paddle.o blocks.o hearts.o scoreBoard.o wdt_handler.o p2_interrupt_handler.o switches.o buzzer.o
+breakOut.elf: ${COMMON_OBJECTS} breakOut_Main.o ball.o  paddle.o blocks.o hearts.o scoreBoard.o wdt_handler.o p2_interrupt_handler.o switches.o buzzer.o collision_effect.o
 	${CC} ${CFLAGS} ${LDFLAGS} -o $@ $^ -lTimer -lLcd 
 
 load: breakOut.elf
