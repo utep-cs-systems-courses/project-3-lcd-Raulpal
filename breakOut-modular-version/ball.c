@@ -1,9 +1,11 @@
+#include <msp430.h>
 #include "lcdutils.h"
 #include "lcddraw.h"
 #include "ball.h"
 #include "paddle.h"
 #include "blocks.h"
 #include "hearts.h"
+#include "collision_effect.h"
 
 int ball_position[2] = {screenHeight/2, screenWidth/2}; 
 
@@ -27,7 +29,7 @@ void draw_ball(int row, int col, int color)
 }
 
 // update balls position //
-void update_ball(int color) 
+void update_ball() 
 {
   for (int position = 0; position < 2; position++)
     if (ball_position[position] != next_position[position]) // Position changed //
@@ -43,8 +45,9 @@ void update_ball(int color)
 
     ball_position[position] = next_position[position];
 
-  draw_ball(ball_position[0], ball_position[1], color); // Draw ball at new row and column//
+  draw_ball(ball_position[0], ball_position[1], ball_color); // Draw ball at new row and column//
 }
+
 // left/right/upper/lower/paddles/block collisions //
 void ball_collisions()
 {
@@ -54,20 +57,29 @@ void ball_collisions()
   int oldRow = next_position[0];
   int newRow = oldRow  + ball_velocity[1];
 
-  if (newCol < colLimits[0] || newCol >= colLimits[1])  //left/right //
+  if (newCol < colLimits[0] || newCol >= colLimits[1]) {  //left/right //
     ball_velocity[0] = -ball_velocity[0];
+    sound_effect();
+  }
 
-  if (newRow < rowLimits[0] || newRow >= rowLimits[1]) // top bottom screen //
+  if (newRow < rowLimits[0] || newRow >= rowLimits[1]) { // top bottom screen //
     ball_velocity[1] = -ball_velocity[1];
+    sound_effect();
+  }
+   
   if (newRow >= rowLimits[1]) {                         // bottom screen hit // 
     ball_health--;
     update_heart();
+    sound_effect(); 
   }
   
-  if (ball_paddle_collision() == 1)                        // ball hit paddlle //
+  if (ball_paddle_collision() == 1) {                   // ball hit paddlle //
     ball_velocity[1] = -ball_velocity[1];
+    sound_effect();
+  }
   
   if (ball_block_collision()) {                       //  ball hit block //
+    sound_effect();
     if(block_ball[0] == 1)                            //  ball hit row // 
       ball_velocity[1] = -ball_velocity[1];
 
