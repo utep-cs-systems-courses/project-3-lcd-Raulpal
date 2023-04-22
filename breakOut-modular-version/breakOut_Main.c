@@ -1,3 +1,4 @@
+
 #include <msp430.h>
 #include <libTimer.h>
 #include "lcdutils.h"
@@ -7,7 +8,8 @@
 #include "blocks.h"
 #include "switches.h"
 #include "hearts.h"
-
+#include "scoreBoard.h"
+#include <stdio.h>
 // WARNING: LCD DISPLAY USES P1.0.  Do not touch!!!
 #define LED BIT6 /* note that bit zero req'd for display */
 
@@ -62,14 +64,24 @@ void main()
 
   update_heart();            // initial heart lives //
 
-  drawString5x7(20,20,"break-out", COLOR_WHITE,COLOR_BLACK);
-
   /*
-  while(block_count <= 30 &&  ball_health > 0) { // Testing ball modular//
+  int num = 123;
+
+  char str[10];
+
+  char str2 = 't';
+  sprintf(str, "%d", num );
+  str[3] = str2;
+  */
+  drawString8x12((screenWidth/2) + 20,screenHeight-12,"0/30", COLOR_WHITE, COLOR_BLACK);
+ 
+  
+  while(block_count < 30 &&  ball_health > 0) { // until play finshied game or loses last life//
     if (redrawScreen) {
       redrawScreen = 0;
       update_paddle(); 
       update_blocks();
+      //update_score();
       update_ball(ball_color);
     }
     P1OUT &= ~LED;      // led off //
@@ -77,5 +89,8 @@ void main()
     P1OUT |= LED;       // led on //
     
   }
-  */
+   or_sr(~0x8);       /**< GIE (disable interrupts) */
+   or_sr(0x10);        // CPU OFF //
+ 
+ 
 }
