@@ -59,16 +59,18 @@ void main()
 
   or_sr(0x8);                 /**< GIE (enable interrupts) */
 
+  
   clearScreen(COLOR_BLACK);  // background is black //
 
   fillRectangle(0,screenHeight-18, screenWidth, 3, COLOR_WHITE);
 
   update_heart();            // initial heart lives //
+
+  draw_paddle(screenHeight-23, (screenWidth/2) -15, COLOR_RED); 
   
   drawString8x12((screenWidth/2) + 39,screenHeight-12,"/30", COLOR_WHITE, COLOR_BLACK);
 
-
-  while(block_count < 30 &&  ball_health > 0) { // until play finshied game or loses last life//
+  while(block_count < 30 &&  ball_health > 0) { // until play finshed game or loses last life//
     if (redrawScreen) {
       redrawScreen = 0;
       update_screen();
@@ -88,10 +90,6 @@ void update_screen()
 {
    update_paddle(); 
    update_blocks();
-
-   if (block_count > past_ball_count) {
-     past_ball_count = block_count;
-     update_score();
-   }
-   update_ball(ball_color);
+   update_score();
+   update_ball();
 }
