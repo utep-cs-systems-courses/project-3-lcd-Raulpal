@@ -9,6 +9,7 @@
 #include "switches.h"
 #include "hearts.h"
 #include "scoreBoard.h"
+#include "buzzer.h"
 #include <stdio.h>
 // WARNING: LCD DISPLAY USES P1.0.  Do not touch!!!
 #define LED BIT6 /* note that bit zero req'd for display */
@@ -55,6 +56,7 @@ void main()
 
   switch_init();              // setp up switches //
 
+  buzzer_init();               // set up sound  //
   enableWDTInterrupts();      /**< enable periodic interrupt */
 
   or_sr(0x8);                 /**< GIE (enable interrupts) */
