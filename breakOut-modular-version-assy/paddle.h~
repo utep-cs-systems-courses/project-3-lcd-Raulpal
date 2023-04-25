@@ -1,0 +1,8 @@
+#ifndef paddle_included
+#define paddle_included
+
+void draw_paddle(int row, int col, int color);
+void update_paddle();
+char ball_paddle_collision();
+
+#endif // included
